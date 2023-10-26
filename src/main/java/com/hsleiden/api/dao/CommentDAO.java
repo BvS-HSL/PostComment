@@ -2,7 +2,6 @@ package com.hsleiden.api.dao;
 
 import com.hsleiden.api.exception.NotFoundException;
 import com.hsleiden.api.model.Comment;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -11,9 +10,17 @@ import java.util.Optional;
 @Component
 public class CommentDAO {
 
+    // BvS: as explained by VS in IPSEN2 test workshop autowired
+    // does not allow to mock the repository
+    //@Autowired
+    //private CommentRepository commentRepository;
 
-    @Autowired
-    private CommentRepository commentRepository;
+    final CommentRepository commentRepository;
+
+    public CommentDAO(CommentRepository commentRepository) {
+        this.commentRepository = commentRepository;
+    }
+
 
     public Comment save(Comment newComment){
         Comment comment = this.commentRepository.save(newComment);
